@@ -105,7 +105,7 @@
         dest: '{{ wp_installation_dir }}/wp-config.php'
         remote_src: yes
       become: yes
-      
+
     - name: 'Configura o wp-config com as entradas do banco de dados'
       replace:
         path: '{{ wp_installation_dir }}/wp-config.php'
@@ -118,10 +118,18 @@
         - { regex: 'localhost', value: "{{ wp_db_ip }}" }
       become: yes
 
-    - name: 'Configura Apache para servir o Wordpress'
-      copy:
-        src: '/vagrant/files/000-default.conf'
+    - name: 'Configura Apache para servir Wordpress'
+      template:
+        src: '/vagrant/templates/000-default.conf.j2'
         dest: '/etc/apache2/sites-available/000-default.conf'
       become: yes
-      notify: 
+      notify:
         - restart apache
+
+    # - name: 'Configura Apache para servir o Wordpress'
+    #   copy:
+    #     src: '/vagrant/files/000-default.conf'
+    #     dest: '/etc/apache2/sites-available/000-default.conf'
+    #   become: yes
+    #   notify: 
+    #     - restart apache
