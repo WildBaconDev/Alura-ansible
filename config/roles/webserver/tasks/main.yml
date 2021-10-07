@@ -1,0 +1,19 @@
+---
+- name: Adiciona php5 apt-repository
+  ansible.builtin.apt_repository:
+    repo: ppa:ondrej/php
+  become: yes
+
+- name: 'Instalar pacodes de dependecia do sistema operacional'
+  apt: 
+    name: 
+      - php5.6
+      - apache2 
+      - libapache2-mod-php5.6
+      - php5.6-gd
+      # - libssh2-php
+      - php-ssh2
+      - php5.6-mcrypt
+      - php5.6-mysql
+    state: latest
+  become: yes
